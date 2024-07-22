@@ -25,7 +25,7 @@ if st.button("Submit"):
         chat_input = st.text_area("Chat Input", height=200)
         
         if st.button("Send"):
-            result = process_query(chat_input, source_type=source_type, source_path=source_path)
-            st.write("Answer:", result["answer"])
+            
+            st.write("Answer:", chat_input)
     except:
         st.write("Error downloading file.")
