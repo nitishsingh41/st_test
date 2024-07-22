@@ -26,7 +26,7 @@ if st.button("Submit"):
         chat_input = st.text_area("Chat Input", height=200)
         
         if st.button("Send"):
-            
-            st.write("Answer:", chat_input)
+            dummy=st.empty()
+            dummy.write("Answer:", chat_input)
     except:
         st.write("Error downloading file.")
