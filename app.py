@@ -47,14 +47,10 @@ if st.button("Submit"):
             # Ask a question
         if question := st.chat_input("Ask a question"):
             # Append user question to history
-
+            st.chat_message("user").markdown(question)
+            st.chat_message("assistant").markdown("ans: ",question)
             # Add user question
-            with st.chat_message("user"):
-                st.markdown(question)
-        
-            # Answer the question
-            with st.chat_message("assistant"):
-                st.write("ans: ",question)
+    
       
 
 
