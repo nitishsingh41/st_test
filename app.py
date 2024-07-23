@@ -43,18 +43,18 @@ if st.button("Submit"):
                 st.error("Please enter a valid website URL.")
                 source_path = None
         
-        if source_path is not None:
+        #if source_path is not None:
             # Ask a question
-            if question := st.chat_input("Ask a question"):
-                # Append user question to history
-   
-                # Add user question
-                with st.chat_message("user"):
-                    st.markdown(question)
-            
-                # Answer the question
-                with st.chat_message("assistant"):
-                    st.write("ans: ",question)
+        if question := st.chat_input("Ask a question"):
+            # Append user question to history
+
+            # Add user question
+            with st.chat_message("user"):
+                st.markdown(question)
+        
+            # Answer the question
+            with st.chat_message("assistant"):
+                st.write("ans: ",question)
       
 
 
