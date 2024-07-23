@@ -44,14 +44,19 @@ if st.button("Submit"):
                 source_path = None
         
         if source_path is not None:
-            # Chat interface
-            chat_input = st.chat_input("Type your message here...")
+            # Ask a question
+            if question := st.chat_input("Ask a question"):
+                # Append user question to history
+   
+                # Add user question
+                with st.chat_message("user"):
+                    st.markdown(question)
+            
+                # Answer the question
+                with st.chat_message("assistant"):
+                    st.write("ans: ",question)
+      
 
-            if chat_input:
-                # Here you would typically process the chat_input
-                st.chat_message("user", chat_input)  # Display user's message
-                # For demonstration, echoing the input as the bot's response
-                st.chat_message("bot", f"You said: {chat_input}")  # Display bot's response
 
     except Exception as e:
         st.error(f"An unexpected error occurred: {e}")
