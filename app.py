@@ -4,8 +4,10 @@ from io import BytesIO
 
 st.title("PDF/TXT/Website Chat Bot")
 
+# Select source type
 source_type = st.selectbox("Select Source Type", options=['pdf', 'txt', 'website'])
 
+# Input based on selected source type
 if source_type == 'pdf':
     uploaded_pdf = st.file_uploader("Upload a PDF file", type=["pdf"])
 elif source_type == 'txt':
@@ -19,33 +21,37 @@ if st.button("Submit"):
             if uploaded_pdf is not None:
                 with open("uploaded_document.pdf", "wb") as f:
                     f.write(uploaded_pdf.getbuffer())
-                st.write("PDF uploaded successfully.")
+                st.success("PDF uploaded successfully.")
                 source_path = "uploaded_document.pdf"
             else:
-                st.write("Please upload a PDF file.")
+                st.error("Please upload a PDF file.")
                 source_path = None
         elif source_type == 'txt':
             if uploaded_txt is not None:
                 with open("uploaded_document.txt", "wb") as f:
                     f.write(uploaded_txt.getbuffer())
-                st.write("TXT file uploaded successfully.")
+                st.success("TXT file uploaded successfully.")
                 source_path = "uploaded_document.txt"
             else:
-                st.write("Please upload a TXT file.")
+                st.error("Please upload a TXT file.")
                 source_path = None
         else:  # website
             if web_url:
                 source_path = web_url
-                st.write("Website URL accepted.")
+                st.success("Website URL accepted.")
             else:
-                st.write("Please enter a valid website URL.")
+                st.error("Please enter a valid website URL.")
                 source_path = None
         
         if source_path is not None:
-            chat_input = st.text_area("Chat Input", height=200)
-            
-            if st.button("Send"):
+            # Chat interface
+            chat_input = st.chat_input("Type your message here...")
+
+            if chat_input:
                 # Here you would typically process the chat_input
-                st.write("Answer:", chat_input)
+                st.chat_message("user", chat_input)  # Display user's message
+                # For demonstration, echoing the input as the bot's response
+                st.chat_message("bot", f"You said: {chat_input}")  # Display bot's response
+
     except Exception as e:
-        st.write(f"An unexpected error occurred: {e}")
+        st.error(f"An unexpected error occurred: {e}")
