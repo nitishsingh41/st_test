@@ -27,11 +27,6 @@ else:  # website
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Display chat messages from history on app rerun
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
-
 # Process the upload and start chat when the sidebar button is clicked
 if st.sidebar.button("Upload and Start Chat"):
     if source_type == 'pdf':
@@ -40,6 +35,7 @@ if st.sidebar.button("Upload and Start Chat"):
                 f.write(uploaded_pdf.getbuffer())
             st.success("PDF uploaded successfully.")
             source_path = "uploaded_document.pdf"
+            st.session_state.chat_active = True  # Activate chat
         else:
             st.error("Please upload a PDF file.")
             source_path = None
@@ -49,6 +45,7 @@ if st.sidebar.button("Upload and Start Chat"):
                 f.write(uploaded_txt.getbuffer())
             st.success("TXT file uploaded successfully.")
             source_path = "uploaded_document.txt"
+            st.session_state.chat_active = True  # Activate chat
         else:
             st.error("Please upload a TXT file.")
             source_path = None
@@ -56,21 +53,29 @@ if st.sidebar.button("Upload and Start Chat"):
         if web_url:
             source_path = web_url
             st.success("Website URL accepted.")
+            st.session_state.chat_active = True  # Activate chat
         else:
             st.error("Please enter a valid website URL.")
             source_path = None
 
-# React to user input
-if prompt := st.chat_input("What can I help you with?"):
-    # Display user message in chat message container
-    st.chat_message("user").markdown(prompt)
-    # Add user message to chat history
-    st.session_state.messages.append({"role": "user", "content": prompt})
+# Display chat messages from history if chat is active
+if "chat_active" in st.session_state and st.session_state.chat_active:
+    # Display chat messages from history on app rerun
+    for message in st.session_state.messages:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
 
-    # Simulate a response (replace with actual processing logic)
-    response = f"Echo: {prompt}"
-    # Display assistant response in chat message container
-    with st.chat_message("assistant"):
-        st.markdown(response)
-    # Add assistant response to chat history
-    st.session_state.messages.append({"role": "assistant", "content": response})
+    # React to user input
+    if prompt := st.chat_input("What can I help you with?"):
+        # Display user message in chat message container
+        st.chat_message("user").markdown(prompt)
+        # Add user message to chat history
+        st.session_state.messages.append({"role": "user", "content": prompt})
+
+        # Simulate a response (replace with actual processing logic)
+        response = f"Echo: {prompt}"
+        # Display assistant response in chat message container
+        with st.chat_message("assistant"):
+            st.markdown(response)
+        # Add assistant response to chat history
+        st.session_state.messages.append({"role": "assistant", "content": response})
