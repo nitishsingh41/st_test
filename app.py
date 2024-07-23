@@ -61,7 +61,8 @@ if st.sidebar.button("Upload and Start Chat"):
                 st.markdown(message["content"])
 
         # React to user input
-        if prompt := st.chat_input("What can I help you with?"):
+        prompt = st.chat_input("What can I help you with?")
+        if prompt:
             # Display user message in chat message container
             st.chat_message("user").markdown(prompt)
             # Add user message to chat history
